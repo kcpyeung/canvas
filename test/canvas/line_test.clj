@@ -35,7 +35,11 @@
   (testing "can't draw on left border"
     (let [canvas (canvas 10 8)]
       (is (nil? (line canvas 0 3 7 3)))))
-
-  )
+  (testing "can't draw on right border"
+    (let [canvas (canvas 10 8)]
+      (is (nil? (line canvas 1 3 9 3)))))
+  (testing "can't draw past right border"
+    (let [canvas (canvas 10 8)]
+      (is (nil? (line canvas 1 3 10 3))))))
 
 (run-tests)

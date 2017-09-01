@@ -14,4 +14,5 @@
         (letfn [(place-row-in-canvas [y-coord] (if (= y1 y-coord) drawn-line (nth canvas y-coord)))]
           (cond
             (not (pos? x1)) nil
+            (>= x2 (dec (count row))) nil
             :default (map place-row-in-canvas all-y-indexes)))))))
