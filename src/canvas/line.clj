@@ -12,4 +12,6 @@
             drawn-line (map draw-line all-x-indexes)
             all-y-indexes (range (count canvas))]
         (letfn [(place-row-in-canvas [y-coord] (if (= y1 y-coord) drawn-line (nth canvas y-coord)))]
-          (map place-row-in-canvas all-y-indexes))))))
+          (cond
+            (not (pos? (first x1-x2))) nil
+            :default (map place-row-in-canvas all-y-indexes)))))))
