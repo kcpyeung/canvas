@@ -25,7 +25,7 @@
     (if (out-of-bounds? canvas x1' y1 x2' y2)
       nil
       (let [row (nth canvas (inc y1))]
-        (letfn [(draw-line [x-coord] (if (should-draw-at? x-coord) "*" (nth row x-coord)))]
+        (letfn [(draw-line [x-coord] (if (should-draw-at? x-coord) "x" (nth row x-coord)))]
           (let [all-x-indexes (range (count row))
                 drawn-line (map draw-line all-x-indexes)
                 all-y-indexes (range (count canvas))]
@@ -40,11 +40,11 @@
             all-y-indexes (range (count canvas))
             is-right-row? (set (range y1' (inc y2')))
             is-right-column? (partial = x1)]
-        (letfn [(draw-column [row] (map #(if (is-right-column? %1) "*" (nth row %1)) all-x-indexes))
+        (letfn [(draw-column [row] (map #(if (is-right-column? %1) "x" (nth row %1)) all-x-indexes))
                 (draw-row [y-coord row]
                   (if (is-right-row? y-coord)
                     (draw-column row)
                     row))]
           (map draw-row all-y-indexes canvas))))))
 
-  (defmethod line :diagonal [_ _ _ _ _] nil)
+(defmethod line :diagonal [_ _ _ _ _] nil)
