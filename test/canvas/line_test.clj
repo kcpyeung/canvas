@@ -67,4 +67,17 @@
       (let [canvas (canvas 10 8)]
         (is (nil? (line canvas 1 7 5 7)))))))
 
+(deftest vertical-lines
+  (testing "drawing a vertical line in an empty space, from top to bottom"
+    (let [canvas (canvas 10 8)]
+      (is (= (list
+               (list "-" "-" "-" "-" "-" "-" "-" "-" "-" "-")
+               (list "|" " " " " " " " " " " " " " " " " "|")
+               (list "|" " " " " "*" " " " " " " " " " " "|")
+               (list "|" " " " " "*" " " " " " " " " " " "|")
+               (list "|" " " " " "*" " " " " " " " " " " "|")
+               (list "|" " " " " "*" " " " " " " " " " " "|")
+               (list "|" " " " " "*" " " " " " " " " " " "|")
+               (list "-" "-" "-" "-" "-" "-" "-" "-" "-" "-")) (line canvas 3 2 3 6))))))
+
 (run-tests)

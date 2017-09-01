@@ -13,7 +13,13 @@
       (not (pos? y1))
       (> y1 max-y))))
 
-(defn line [canvas x1 y1 x2 y2]
+(defmulti line (fn [canvas x1 y1 x2 y2]
+                 (cond
+                   (= y1 y2) :horizontal
+                   (= x1 x2) :vertical
+                   :default :diagonal)))
+
+(defmethod line :horizontal [canvas x1 y1 x2 y2]
   (let [[x1' x2'] (sorted-x1-x2 [x1 x2])
         should-draw-at? (set (range x1' (inc x2')))]
     (if (out-of-bounds? canvas x1' y1 x2')
@@ -25,3 +31,17 @@
                 all-y-indexes (range (count canvas))]
             (letfn [(place-row-in-canvas [y-coord] (if (= y1 y-coord) drawn-line (nth canvas y-coord)))]
               (map place-row-in-canvas all-y-indexes))))))))
+
+(defmethod line :vertical [canvas x1 y1 x2 y2]
+  (let [all-x-indexes (range (count (first canvas)))
+        all-y-indexes (range (count canvas))
+        is-right-row? (set (range y1 (inc y2)))
+        is-right-column? (partial = x1)]
+    (letfn [(draw-column [row] (map #(if (is-right-column? %1) "*" (nth row %1)) all-x-indexes))
+            (draw-row [y-coord row]
+              (if (is-right-row? y-coord)
+                (draw-column row)
+                row))]
+      (map draw-row all-y-indexes canvas))))
+
+(defmethod line :diagonal [canvas x1 x2 y2 y2] nil)
