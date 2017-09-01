@@ -1,6 +1,6 @@
 (ns canvas.line)
 
-(defn- sorted-x1-x2 [[a b :as numbers]]
+(defn- sorted [[a b :as numbers]]
   (if (> b a) numbers [b a]))
 
 (defn- out-of-bounds? [canvas x1 y1 x2]
@@ -20,7 +20,7 @@
                    :default :diagonal)))
 
 (defmethod line :horizontal [canvas x1 y1 x2 _]
-  (let [[x1' x2'] (sorted-x1-x2 [x1 x2])
+  (let [[x1' x2'] (sorted [x1 x2])
         should-draw-at? (set (range x1' (inc x2')))]
     (if (out-of-bounds? canvas x1' y1 x2')
       nil
@@ -35,7 +35,8 @@
 (defmethod line :vertical [canvas x1 y1 _ y2]
   (let [all-x-indexes (range (count (first canvas)))
         all-y-indexes (range (count canvas))
-        is-right-row? (set (range y1 (inc y2)))
+        [y1' y2'] (sorted [y1 y2])
+        is-right-row? (set (range y1' (inc y2')))
         is-right-column? (partial = x1)]
     (letfn [(draw-column [row] (map #(if (is-right-column? %1) "*" (nth row %1)) all-x-indexes))
             (draw-row [y-coord row]
