@@ -20,31 +20,24 @@
                    :default :diagonal)))
 
 (defmethod line :horizontal [canvas x1 y1 x2 y2]
-  (let [[x1' x2'] (sorted [x1 x2])
-        should-draw-at? (set (range x1' (inc x2')))]
+  (let [[x1' x2'] (sorted [x1 x2])]
     (if (out-of-bounds? canvas x1' y1 x2' y2)
       nil
-      (let [row (nth canvas (inc y1))]
-        (letfn [(draw-line [x-coord] (if (should-draw-at? x-coord) "x" (nth row x-coord)))]
-          (let [all-x-indexes (range (count row))
-                drawn-line (map draw-line all-x-indexes)
-                all-y-indexes (range (count canvas))]
-            (letfn [(place-row-in-canvas [y-coord] (if (= y1 y-coord) drawn-line (nth canvas y-coord)))]
-              (map place-row-in-canvas all-y-indexes))))))))
+      (let [row (nth canvas (inc y1))
+            is-right-row? (partial = y1)
+            is-right-column? (set (range x1' (inc x2')))]
+        (letfn [(draw-columns [row] (map-indexed (fn [x-coord char-at-x-coord] (if (is-right-column? x-coord) "x" char-at-x-coord)) row))
+                (draw-rows [y-coord row] (if (is-right-row? y-coord) (draw-columns row) row))]
+          (map-indexed draw-rows canvas))))))
 
 (defmethod line :vertical [canvas x1 y1 x2 y2]
   (let [[y1' y2'] (sorted [y1 y2])]
     (if (out-of-bounds? canvas x1 y1' x2 y2')
       nil
-      (let [all-x-indexes (range (count (first canvas)))
-            all-y-indexes (range (count canvas))
-            is-right-row? (set (range y1' (inc y2')))
+      (let [is-right-row? (set (range y1' (inc y2')))
             is-right-column? (partial = x1)]
-        (letfn [(draw-column [row] (map #(if (is-right-column? %1) "x" (nth row %1)) all-x-indexes))
-                (draw-row [y-coord row]
-                  (if (is-right-row? y-coord)
-                    (draw-column row)
-                    row))]
-          (map draw-row all-y-indexes canvas))))))
+        (letfn [(draw-columns [row] (map-indexed (fn [x-coord char-at-x-coord] (if (is-right-column? x-coord) "x" char-at-x-coord)) row))
+                (draw-rows [y-coord row] (if (is-right-row? y-coord) (draw-columns row) row))]
+          (map-indexed draw-rows canvas))))))
 
 (defmethod line :diagonal [_ _ _ _ _] nil)
