@@ -58,6 +58,12 @@
       (is (nil? (line canvas 1 -1 5 -1)))))
   (testing "can't draw on top border"
     (let [canvas (canvas 10 8)]
-      (is (nil? (line canvas 1 0 5 0))))))
+      (is (nil? (line canvas 1 0 5 0)))))
+  (testing "can't draw past bottom border"
+    (let [canvas (canvas 10 8)]
+      (is (nil? (line canvas 1 8 5 8)))))
+  (testing "can't draw on bottom border"
+    (let [canvas (canvas 10 8)]
+      (is (nil? (line canvas 1 7 5 7))))))
 
 (run-tests)
