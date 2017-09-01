@@ -3,9 +3,22 @@
             [canvas.canvas :refer :all]
             [canvas.line :refer :all]))
 
+(deftest smallest-line
+  (testing "the smallest line is one pixel"
+    (let [canvas (canvas 10 8)]
+      (is (= (list
+               (list "-" "-" "-" "-" "-" "-" "-" "-" "-" "-")
+               (list "|" " " " " " " " " " " " " " " " " "|")
+               (list "|" " " " " " " " " " " " " " " " " "|")
+               (list "|" " " " " " " " " " " " " " " " " "|")
+               (list "|" " " " " " " "*" " " " " " " " " "|")
+               (list "|" " " " " " " " " " " " " " " " " "|")
+               (list "|" " " " " " " " " " " " " " " " " "|")
+               (list "-" "-" "-" "-" "-" "-" "-" "-" "-" "-")) (line canvas 4 4 4 4))))))
+
 (deftest horizontal-lines
   (testing "valid lines"
-    (testing "drawing a horizontal line in an empty space, from left to right"
+    (testing "drawing a horizontal line in an empty space from left to right is the same as from right to left"
       (let [canvas (canvas 10 8)]
         (is (= (list
                  (list "-" "-" "-" "-" "-" "-" "-" "-" "-" "-")
@@ -15,31 +28,7 @@
                  (list "|" " " " " " " " " " " " " " " " " "|")
                  (list "|" " " " " " " " " " " " " " " " " "|")
                  (list "|" " " " " " " " " " " " " " " " " "|")
-                 (list "-" "-" "-" "-" "-" "-" "-" "-" "-" "-")) (line canvas 1 3 7 3)))))
-
-    (testing "drawing a horizontal line in an empty space, from right to left"
-      (let [canvas (canvas 10 8)]
-        (is (= (list
-                 (list "-" "-" "-" "-" "-" "-" "-" "-" "-" "-")
-                 (list "|" " " " " " " " " " " " " " " " " "|")
-                 (list "|" " " " " " " " " " " " " " " " " "|")
-                 (list "|" " " " " " " " " " " " " " " " " "|")
-                 (list "|" " " " " " " "*" "*" "*" "*" " " "|")
-                 (list "|" " " " " " " " " " " " " " " " " "|")
-                 (list "|" " " " " " " " " " " " " " " " " "|")
-                 (list "-" "-" "-" "-" "-" "-" "-" "-" "-" "-")) (line canvas 7 4 4 4) (line canvas 4 4 7 4)))))
-
-    (testing "the smallest horizontal line is one pixel"
-      (let [canvas (canvas 10 8)]
-        (is (= (list
-                 (list "-" "-" "-" "-" "-" "-" "-" "-" "-" "-")
-                 (list "|" " " " " " " " " " " " " " " " " "|")
-                 (list "|" " " " " " " " " " " " " " " " " "|")
-                 (list "|" " " " " " " " " " " " " " " " " "|")
-                 (list "|" " " " " " " "*" " " " " " " " " "|")
-                 (list "|" " " " " " " " " " " " " " " " " "|")
-                 (list "|" " " " " " " " " " " " " " " " " "|")
-                 (list "-" "-" "-" "-" "-" "-" "-" "-" "-" "-")) (line canvas 4 4 4 4))))))
+                 (list "-" "-" "-" "-" "-" "-" "-" "-" "-" "-")) (line canvas 1 3 7 3) (line canvas 7 3 1 3))))))
 
   (testing "invalid lines"
     (testing "can't draw past left border"
@@ -68,7 +57,7 @@
         (is (nil? (line canvas 1 7 5 7)))))))
 
 (deftest vertical-lines
-  (testing "drawing a vertical line in an empty space, from top to bottom"
+  (testing "drawing a vertical line in an empty space from top to bottom is the same as bottom to top"
     (let [canvas (canvas 10 8)]
       (is (= (list
                (list "-" "-" "-" "-" "-" "-" "-" "-" "-" "-")
