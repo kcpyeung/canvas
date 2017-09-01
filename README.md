@@ -1,6 +1,6 @@
 # canvas
 
-[![CircleCI](https://circleci.com/gh/kcpyeung/canvas/tree/master.svg?style=svg)](https://circleci.com/gh/kcpyeung/canvas/tree/master)
+[![CircleCI](https://circleci.com/gh/kcpyeung/canvas.svg?style=svg&circle-token=4033f23b65cf5a766fe2468b34629fe9d9591b63)](https://circleci.com/gh/kcpyeung/canvas)
 
 FIXME: description
 
