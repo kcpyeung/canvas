@@ -15,4 +15,5 @@
           (cond
             (not (pos? x1)) nil
             (>= x2 (dec (count row))) nil
+            (not (pos? y1)) nil
             :default (map place-row-in-canvas all-y-indexes)))))))
