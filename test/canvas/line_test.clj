@@ -67,6 +67,32 @@
                (list "|" " " " " "*" " " " " " " " " " " "|")
                (list "|" " " " " "*" " " " " " " " " " " "|")
                (list "|" " " " " "*" " " " " " " " " " " "|")
-               (list "-" "-" "-" "-" "-" "-" "-" "-" "-" "-")) (line canvas 3 2 3 6) (line canvas 3 6 3 2))))))
+               (list "-" "-" "-" "-" "-" "-" "-" "-" "-" "-")) (line canvas 3 2 3 6) (line canvas 3 6 3 2)))))
+
+  (testing "invalid lines"
+    (testing "can't draw past top border"
+      (let [canvas (canvas 10 8)]
+        (is (nil? (line canvas 3 -1 3 5)))))
+    (testing "can't draw on top border"
+      (let [canvas (canvas 10 8)]
+        (is (nil? (line canvas 3 0 3 5)))))
+    (testing "can't draw past bottom border"
+      (let [canvas (canvas 10 8)]
+        (is (nil? (line canvas 3 1 3 8)))))
+    (testing "can't draw on bottom border"
+      (let [canvas (canvas 10 8)]
+        (is (nil? (line canvas 3 1 3 7)))))
+    (testing "can't draw past left border"
+      (let [canvas (canvas 10 8)]
+        (is (nil? (line canvas -1 1 -1 6)))))
+    (testing "can't draw on left border"
+      (let [canvas (canvas 10 8)]
+        (is (nil? (line canvas 0 1 0 6)))))
+    (testing "can't draw past right border"
+      (let [canvas (canvas 10 8)]
+        (is (nil? (line canvas 10 1 10 6)))))
+    (testing "can't draw on right border"
+      (let [canvas (canvas 10 8)]
+        (is (nil? (line canvas 9 1 9 6)))))))
 
 (run-tests)
