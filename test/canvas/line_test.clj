@@ -26,7 +26,19 @@
              (list "|" " " " " " " "*" "*" "*" "*" " " "|")
              (list "|" " " " " " " " " " " " " " " " " "|")
              (list "|" " " " " " " " " " " " " " " " " "|")
-             (list "-" "-" "-" "-" "-" "-" "-" "-" "-" "-")) (line canvas 7 4 4 4) (line canvas 4 4 7 4))))))
+             (list "-" "-" "-" "-" "-" "-" "-" "-" "-" "-")) (line canvas 7 4 4 4) (line canvas 4 4 7 4)))))
+
+  (testing "the smallest horizontal line is one pixel"
+    (let [canvas (canvas 10 8)]
+      (is (= (list
+             (list "-" "-" "-" "-" "-" "-" "-" "-" "-" "-")
+             (list "|" " " " " " " " " " " " " " " " " "|")
+             (list "|" " " " " " " " " " " " " " " " " "|")
+             (list "|" " " " " " " " " " " " " " " " " "|")
+             (list "|" " " " " " " "*" " " " " " " " " "|")
+             (list "|" " " " " " " " " " " " " " " " " "|")
+             (list "|" " " " " " " " " " " " " " " " " "|")
+             (list "-" "-" "-" "-" "-" "-" "-" "-" "-" "-")) (line canvas 4 4 4 4))))))
 
 (deftest test-invalid-horizontal-lines
   (testing "can't draw past left border"
