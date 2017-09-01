@@ -75,6 +75,10 @@
       (testing "can't draw past right border"
         (is (nil? (line canvas 10 1 10 6))))
       (testing "can't draw on right border"
-        (is (nil? (line canvas 9 1 9 6)))))))
+        (is (nil? (line canvas 9 1 9 6))))))
+
+  (deftest diagonal-lines
+    (testing "are not supported"
+      (is (nil? (line canvas 3 5 6 6))))))
 
 (run-tests)
