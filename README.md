@@ -1,5 +1,7 @@
 # canvas
 
+[![CircleCI](https://circleci.com/gh/kcpyeung/canvas/tree/master.svg?style=svg)](https://circleci.com/gh/kcpyeung/canvas/tree/master)
+
 FIXME: description
 
 ## Installation

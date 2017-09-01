@@ -23,3 +23,5 @@
     (is (nil? (canvas 0 8))))
   (testing "zero y yields nil"
     (is (nil? (canvas 10 0)))))
+
+(run-tests)
