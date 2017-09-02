@@ -1,10 +1,14 @@
 (ns canvas.core
   (:require [canvas.canvas :refer :all]
             [canvas.line :refer :all]
-            [clojure.string :refer [join]])
+            [clojure.string :refer [join split]])
   (:gen-class :name canvas.core :main true))
 
 (def current-canvas (atom nil))
+
+(defn- split-args [args]
+  (->> (split args #" ")
+       (map #(Integer/parseInt %1))))
 
 (defn- draw [rows]
   (if rows
@@ -18,8 +22,8 @@
     (let [args (join rest)]
       (cond
         (= \Q command) (System/exit 0)
-        (= \C command) (swap! current-canvas (fn [_] (canvas 10 8)))
-        (= \L command) (swap! current-canvas (fn [latest] (line latest 3 5 7 5))))
+        (= \C command) (let [[x y] (split-args args)] (swap! current-canvas (fn [_] (canvas x y))))
+        (= \L command) (let [[x1 y1 x2 y2] (split-args args)] (swap! current-canvas (fn [latest] (line latest x1 y1 x2 y2)))))
       (draw @current-canvas)
       (print "enter command: ")
       (flush)
