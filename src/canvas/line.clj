@@ -15,7 +15,7 @@
 
 (defn- draw-line-on-canvas [canvas x1 y1 x2 y2 is-right-row? is-right-column?]
   (if (out-of-bounds? canvas x1 y1 x2 y2)
-    nil
+    canvas
     (letfn [(draw-columns [row] (map-indexed (fn [x-coord char-at-x-coord] (if (is-right-column? x-coord) "x" char-at-x-coord)) row))
             (draw-rows [y-coord row] (if (is-right-row? y-coord) (draw-columns row) row))]
       (map-indexed draw-rows canvas))))
@@ -38,4 +38,4 @@
         is-right-column? (partial = x1)]
     (draw-line-on-canvas canvas x1 y1' x2 y2' is-right-row? is-right-column?)))
 
-(defmethod line :diagonal [_ _ _ _ _] nil)
+(defmethod line :diagonal [canvas _ _ _ _] canvas)
