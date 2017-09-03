@@ -1,6 +1,7 @@
 (ns canvas.core
   (:require [canvas.canvas :refer :all]
             [canvas.line :refer :all]
+            [canvas.rectangle :refer :all]
             [clojure.string :refer [join split]])
   (:gen-class :name canvas.core :main true))
 
@@ -23,7 +24,8 @@
       (cond
         (= \Q command) (System/exit 0)
         (= \C command) (let [[x y] (split-args args)] (swap! current-canvas (fn [_] (canvas x y))))
-        (= \L command) (let [[x1 y1 x2 y2] (split-args args)] (swap! current-canvas (fn [latest] (line latest x1 y1 x2 y2)))))
+        (= \L command) (let [[x1 y1 x2 y2] (split-args args)] (swap! current-canvas (fn [latest] (line latest x1 y1 x2 y2))))
+        (= \R command) (let [[x1 y1 x2 y2] (split-args args)] (swap! current-canvas (fn [latest] (rectangle latest x1 y1 x2 y2)))))
       (draw @current-canvas)
       (print "enter command: ")
       (flush)
