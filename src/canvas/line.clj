@@ -40,5 +40,6 @@
 
 (defmethod draw-line :diagonal [canvas _ _ _ _ _] canvas)
 
-(defn line [canvas x1 y1 x2 y2]
-  (draw-line canvas "x" x1 y1 x2 y2))
+(defn line
+  ([canvas x1 y1 x2 y2] (line canvas "x" x1 y1 x2 y2))
+  ([canvas char x1 y1 x2 y2] (draw-line canvas char x1 y1 x2 y2)))
