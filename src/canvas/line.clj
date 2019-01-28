@@ -13,10 +13,13 @@
       (not (pos? y1))
       (> y2 max-y))))
 
+(defn- is-empty? [coord]
+  (= coord " "))
+
 (defn- draw-line-on-canvas [canvas char x1 y1 x2 y2 is-right-row? is-right-column?]
   (if (out-of-bounds? canvas x1 y1 x2 y2)
     canvas
-    (letfn [(draw-columns [row] (map-indexed (fn [x-coord char-at-x-coord] (if (is-right-column? x-coord) char char-at-x-coord)) row))
+    (letfn [(draw-columns [row] (map-indexed (fn [x-coord char-at-x-coord] (if (and (is-empty? char-at-x-coord) (is-right-column? x-coord)) char char-at-x-coord)) row))
             (draw-rows [y-coord row] (if (is-right-row? y-coord) (draw-columns row) row))]
       (map-indexed draw-rows canvas))))
 
