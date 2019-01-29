@@ -42,4 +42,8 @@
     (testing "is on a occupied spot"
              (is (= canvas-with-rectange (point canvas-with-rectange "*" 2 2))))))
 
+  (deftest neighbouring-points
+    (testing "when all 8 are empty, then they are returned"
+             (is (= [[2 2] [3 2] [4 2] [2 3] [4 3] [2 4] [3 4] [4 4]] (neighbours canvas 3 3)))))
+
 (run-tests)
