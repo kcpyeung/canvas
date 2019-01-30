@@ -9,3 +9,13 @@
   [[(dec x) (dec y)] [x (dec y)] [(inc x) (dec y)]
    [(dec x) y      ]             [(inc x) y]
    [(dec x) (inc y)] [x (inc y)] [(inc x) (inc y)]])
+
+(defn is-empty? [canvas x y]
+  (->> canvas
+       (map-indexed (fn [i row] (if (= i y) row nil)))
+       (remove nil?)
+       first
+       (map-indexed (fn [i col] (if (= i x) col nil)))
+       (remove nil?)
+       first
+       (= " ")))
