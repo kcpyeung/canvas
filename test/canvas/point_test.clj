@@ -7,6 +7,19 @@
 (let [canvas               (canvas 10 8)
       canvas-with-rectange (rectangle canvas 2 2 8 6)]
 
+  (deftest get-point-by-coordinates
+    (testing "is within canvas"
+             (is (= " " (at canvas 1 1)))
+             (is (= "x" (at canvas-with-rectange 2 2))))
+
+    (testing "is outside canvas"
+             (is (nil? (at canvas -1 1)))
+             (is (nil? (at canvas 20 2))))
+
+    (testing "is on border"
+             (is (= "-" (at canvas 5 0)))
+             (is (= "|" (at canvas 0 5)))))
+
   (deftest valid-points
     (testing "is within canvas"
              (is

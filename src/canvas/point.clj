@@ -5,14 +5,17 @@
 (defn point [canvas char x y]
   (line canvas char x y x y))
 
-(defn is-empty? [canvas [x y]]
+(defn at [canvas x y]
   (->> canvas
        (map-indexed (fn [i row] (if (= i y) row nil)))
        (remove nil?)
        first
        (map-indexed (fn [i col] (if (= i x) col nil)))
        (remove nil?)
-       first
+       first))
+
+(defn is-empty? [canvas [x y]]
+  (->> (at canvas x y)
        (= " ")))
 
 (defn- neighbouring-coords [x y]
