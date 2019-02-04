@@ -5,9 +5,9 @@
             [clojure.string :refer [join split]])
   (:gen-class :name canvas.core :main true))
 
-(defn- split-args [args]
+(defn- split-args [f args]
   (->> (split args #" ")
-       (map #(Integer/parseInt %1))))
+       (map #(f %1))))
 
 (defn- draw [rows]
   (if rows
@@ -22,9 +22,9 @@
     (let [args    (join rest)
           to-draw (cond
                     (= \Q command) (System/exit 0)
-                    (= \C command) (let [[x y] (split-args args)] (canvas x y))
-                    (= \L command) (let [[x1 y1 x2 y2] (split-args args)] (line current-canvas x1 y1 x2 y2))
-                    (= \R command) (let [[x1 y1 x2 y2] (split-args args)] (rectangle current-canvas x1 y1 x2 y2)))]
+                    (= \C command) (let [[x y] (split-args #(Integer/parseInt %) args)] (canvas x y))
+                    (= \L command) (let [[x1 y1 x2 y2] (split-args #(Integer/parseInt %) args)] (line current-canvas x1 y1 x2 y2))
+                    (= \R command) (let [[x1 y1 x2 y2] (split-args #(Integer/parseInt %) args)] (rectangle current-canvas x1 y1 x2 y2)))]
       (draw to-draw)
       (print "enter command: ")
       (flush)
